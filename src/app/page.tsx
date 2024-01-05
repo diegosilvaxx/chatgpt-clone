@@ -4,9 +4,11 @@ import { Sidebar } from "@/components/Sidebar";
 import { Header } from "@/components/Header";
 import { Chat } from "../../types/Chat";
 import { ChatArea } from "@/components/ChatArea";
+import { Footer } from "@/components/Footer";
 
 const Page = () => {
   const [sidebarOpened, setSidebarOpened] = useState(false);
+  const [AILoading, setAILoading] = useState(false);
   const [chatActive, setChatActive] = useState<Chat>({
     id: "chat",
     title: "chat",
@@ -32,7 +34,7 @@ const Page = () => {
 
   const handleNewChat = () => {};
   const handleSendMessage = () => {};
-  
+
   return (
     <main className="flex min-h-screen bg-gpt-gray">
       <Sidebar
@@ -53,7 +55,7 @@ const Page = () => {
 
         <ChatArea chat={chatActive} />
 
-        <Footer onSendMessage={handleSendMessage}/>
+        <Footer onSendMessage={handleSendMessage} disabled={AILoading} />
       </section>
     </main>
   );
