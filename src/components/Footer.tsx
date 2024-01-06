@@ -1,3 +1,5 @@
+import { ChatMessageInput } from "./ChatMessageInput";
+
 type Props = {
   disabled: boolean;
   onSendMessage: (message: string) => void;
