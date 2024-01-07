@@ -28,11 +28,12 @@ export const ChatMessageInput = ({ disabled, onSend }: Props) => {
   const handleSendMessage = () => {
     if (!disabled && text.trim() !== "") {
       onSend(text);
+      setText("");
     }
   };
   return (
     <div
-      className={`flex border border-gray-800/50 bg-gpt-lightgray p2 rounded-md
+      className={`flex border border-gray-800/50 bg-gpt-lightgray p-2 rounded-md
     ${disabled && "opacity-50"}`}
     >
       <textarea

@@ -6,6 +6,7 @@ import { Chat } from "../../types/Chat";
 import { ChatArea } from "@/components/ChatArea";
 import { Footer } from "@/components/Footer";
 import { v4 as uuidv4 } from "uuid";
+import { SidebarChatButton } from "@/components/SidebarChatButton";
 
 const Page = () => {
   const [sidebarOpened, setSidebarOpened] = useState(false);
@@ -17,6 +18,28 @@ const Page = () => {
   useEffect(() => {
     setChatActive(chatList.find((item) => item.id === chatActiveId));
   }, [chatActiveId, chatList]);
+
+  useEffect(() => {
+    if (AILoading) getAIResponse();
+  }, [AILoading]);
+
+  const getAIResponse = () => {
+    setTimeout(() => {
+      let chatListClone = [...chatList];
+      let chatIndex = chatListClone.findIndex(
+        (item) => item.id === chatActiveId
+      );
+      if (chatIndex > -1) {
+        chatListClone[chatIndex].messages.push({
+          id: uuidv4(),
+          author: "ai",
+          body: "Aqui vai a resposta AI :)",
+        });
+      }
+      setChatList(chatListClone);
+      setAILoading(false);
+    }, 2000);
+  };
 
   const closeSidebar = () => {
     setSidebarOpened(!sidebarOpened);
@@ -63,7 +86,15 @@ const Page = () => {
       });
       setChatList(chatListClone);
     }
+
+    setAILoading(true);
   };
+
+  const handleSelectChat = () => {};
+
+  const handleDeleteChat = () => {};
+
+  const handleEditChat = () => {};
 
   return (
     <main className="flex min-h-screen bg-gpt-gray">
@@ -73,17 +104,26 @@ const Page = () => {
         onClear={handleClearConversations}
         onNewChat={handleNewChat}
       >
-        ...
+        {chatList.map((item) => (
+          <SidebarChatButton
+            key={item.id}
+            chatItem={item}
+            active={item.id === chatActiveId}
+            onClick={handleSelectChat}
+            onDelete={handleDeleteChat}
+            onEdit={handleEditChat}
+          />
+        ))}
       </Sidebar>
 
       <section className="flex flex-col w-full">
         <Header
           openSideBar={closeSidebar}
-          title={`bla bla bla`}
+          title={chatActive ? chatActive.title : "Nova conversa"}
           newChatClick={handleNewChat}
         />
 
-        <ChatArea chat={chatActive} />
+        <ChatArea chat={chatActive} loading={AILoading} />
 
         <Footer onSendMessage={handleSendMessage} disabled={AILoading} />
       </section>

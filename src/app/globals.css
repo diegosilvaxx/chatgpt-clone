@@ -17,7 +17,7 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: white;
   background: linear-gradient(
       to bottom,
       transparent,
@@ -27,12 +27,12 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: .5rem;
+  width: 0.5rem;
   height: 1rem;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(217,217,227,.8);
+  background-color: rgba(217, 217, 227, 0.8);
   border-radius: 1rem;
 }
 
